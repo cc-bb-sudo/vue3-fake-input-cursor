@@ -15,7 +15,7 @@
   ],
   "license": "MIT",
   "description": "A fake input cursor implemented using a Vue 3 hook with TypeScript support",
-  "dependencies": {
+  "peerDependencies": {
     "vue": "^3.5.12"
   },
   "devDependencies": {
