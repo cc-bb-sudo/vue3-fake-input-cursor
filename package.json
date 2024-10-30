@@ -4,6 +4,10 @@
   "main": "dist/useFakeInputCursor.umd.js",
   "module": "dist/useFakeInputCursor.es.js",
   "types": "types/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:cc-bb-sudo/vue3-fake-input-cursor.git"
+  },
   "scripts": {
     "build": "vue-tsc && vite build"
   },
