@@ -1,6 +1,6 @@
 {
   "name": "vue3-fake-input-cursor",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "main": "dist/useFakeInputCursor.umd.js",
   "module": "dist/useFakeInputCursor.es.js",
   "types": "types/index.d.ts",
