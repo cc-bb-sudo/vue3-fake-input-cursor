@@ -1,4 +1,4 @@
-# useFakeInputCursor
+# vue3-fake-input-cursor
 
 `useFakeInputCursor` is a Vue 3 composition hook that provides functionality to create a fake input cursor. This hook allows you to show and hide a blinking cursor and update its position based on the text length, all while leveraging TypeScript for type safety.
 
@@ -14,7 +14,7 @@
 To use this hook, ensure you have Vue 3 and TypeScript set up in your project. You can install it via npm:
 
 ```bash
-npm install useFakeInputCursor
+npm install vue3-fake-input-cursor
 ```
 
 ## Usage
@@ -30,7 +30,7 @@ npm install useFakeInputCursor
 
 <script lang="ts">
 import { ref } from 'vue';
-import { useFakeInputCursor } from 'useFakeInputCursor';
+import { useFakeInputCursor } from 'vue3-fake-input-cursor';
 
 export default {
   setup() {
