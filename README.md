@@ -8,6 +8,7 @@
 - **Customizable Cursor Styles**: Easily customize the cursor's appearance with CSS styles.
 - **Animation Support**: Supports customizable animation properties for the cursor's blinking effect.
 - **Flexible Usage**: Can be used in any Vue 3 component.
+- **Single and Multi-line Text Support**: Compatible with both single-line and multi-line text, adjusting the cursor position accurately even with line-height variations.
 
 ## Installation
 
@@ -18,47 +19,42 @@ npm install vue3-fake-input-cursor
 ```
 
 ## Usage
+
 ### Basic Example
-```ts
+
+```vue
 <template>
-  <div ref="inputElement"  style="position: relative">
+  <div ref="inputElement"  style="position: relative;line-height: 1.5">
     <!-- Your input field -->
     <span>{{ text }}</span>
     <CursorComponent />
   </div>
 </template>
 
-<script lang="ts">
-import { ref } from 'vue';
-import { useFakeInputCursor } from 'vue3-fake-input-cursor';
+<script lang="ts" setup>
+import { ref } from "vue";
+import { useFakeInputCursor } from "./useFakeInputCursor.ts";
 
-export default {
-  setup() {
-    const text = ref('Hello, world!');
-    const { el: CursorComponent, showInputCursor, hideInputCursor, updateInputCursor } = useFakeInputCursor();
+const text = ref("Hello, world!");
+const {
+    el: CursorComponent,
+    showInputCursor,
+    hideInputCursor,
+    updateInputCursor,
+} = useFakeInputCursor({
+    cursorStyle: {
+        bottom: `${1.5 / 2}em` /* half of line-height */,
+    },
+});
 
-    const inputElement = ref<HTMLElement | null>(null);
+// Example to show cursor on mouse enter
+const onMouseEnter = () => {
+    showInputCursor();
+    updateInputCursor(text.value);
+};
 
-    // Example to show cursor on mouse enter
-    const onMouseEnter = () => {
-      showInputCursor();
-      if (inputElement.value) {
-        updateInputCursor(inputElement.value, text.value);
-      }
-    };
-
-    const onMouseLeave = () => {
-      hideInputCursor();
-    };
-
-    return {
-      text,
-      CursorComponent,
-      onMouseEnter,
-      onMouseLeave,
-      inputElement,
-    };
-  },
+const onMouseLeave = () => {
+    hideInputCursor();
 };
 </script>
 
@@ -83,18 +79,17 @@ interface UseFakeInputCursorParams {
     delay?: CSSProperties["animation-delay"];
   };
 }
-
 ```
 
 #### Example with Custom Styles
+
 ```ts
 const { el: CursorComponent } = useFakeInputCursor({
-  cursorStyle: { backgroundColor: 'red', height: '15px' },
-  cursorAnimation: { duration: '0.8s' },
+  cursorStyle: { backgroundColor: "red", height: "15px" },
+  cursorAnimation: { duration: "0.8s" },
 });
-
 ```
 
 ## License
-This project is licensed under the MIT License.
 
+This project is licensed under the MIT License.

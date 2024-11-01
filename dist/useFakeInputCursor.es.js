@@ -1,46 +1,62 @@
-import { ref as s, h as r } from "vue";
-const l = {
+import { ref as a, h as n } from "vue";
+const s = {
   position: "absolute",
-  top: "50%",
+  bottom: "0",
   width: "2px",
   backgroundColor: "black",
   opacity: "0",
-  transform: "translateY(-50%)",
-  height: "10px"
-}, p = {
+  transform: "translateY(50%)",
+  height: "1.5em"
+}, l = {
   name: "blink",
   duration: "1s",
   timingFunction: "step-end",
   iterationCount: "infinite"
 };
-function b({
-  cursorStyle: e,
+function m({
+  cursorStyle: i,
   cursorAnimation: t
 } = {}) {
-  e = {
-    ...l,
-    ...e
+  i = {
+    ...s,
+    ...i
   }, t = {
-    ...p,
+    ...l,
     ...t
   };
-  const i = s(!1), o = s(0);
+  const o = a(!1), e = a("");
   return {
-    el: () => r(
+    el: () => n(
       "div",
       {
         style: {
-          visibility: i.value ? "visible" : "hidden",
-          left: `${o.value}px`,
-          animationName: t.name,
-          animationDuration: t.duration,
-          animationTimingFunction: t.timingFunction,
-          animationIterationCount: t.iterationCount,
-          ...e
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100%"
         }
       },
       [
-        r(
+        n(
+          "span",
+          {
+            style: {
+              opacity: 0
+            }
+          },
+          e.value
+        ),
+        n("span", {
+          style: {
+            visibility: o.value ? "visible" : "hidden",
+            animationName: t.name,
+            animationDuration: t.duration,
+            animationTimingFunction: t.timingFunction,
+            animationIterationCount: t.iterationCount,
+            ...i
+          }
+        }),
+        n(
           "style",
           null,
           `
@@ -54,23 +70,16 @@ function b({
       ]
     ),
     showInputCursor: () => {
-      i.value = !0;
+      o.value = !0;
     },
     hideInputCursor: () => {
-      i.value = !1;
+      o.value = !1;
     },
-    updateInputCursor: (a, u) => {
-      if (a) {
-        if (u.length === 0) {
-          o.value = 0;
-          return;
-        }
-        const n = document.createElement("span");
-        n.style.font = getComputedStyle(a).font, n.innerText = u, document.body.appendChild(n), o.value = n.offsetWidth, document.body.removeChild(n);
-      }
+    updateInputCursor: (u) => {
+      e.value = u;
     }
   };
 }
 export {
-  b as useFakeInputCursor
+  m as useFakeInputCursor
 };

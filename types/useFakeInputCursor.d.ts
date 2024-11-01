@@ -3,7 +3,7 @@ export interface UseFakeInputCursor {
     el: () => VNode;
     showInputCursor: () => void;
     hideInputCursor: () => void;
-    updateInputCursor: (element: HTMLElement, text: string) => void;
+    updateInputCursor: (text: string) => void;
 }
 export interface UseFakeInputCursorParams {
     cursorStyle?: Partial<CSSStyleDeclaration>;

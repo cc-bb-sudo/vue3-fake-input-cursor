@@ -1,1 +1,1 @@
-export { useFakeInputCursor, UseFakeInputCursorParams, UseFakeInputCursor } from "./useFakeInputCursor";
+export { useFakeInputCursor, UseFakeInputCursorParams, UseFakeInputCursor, } from "./useFakeInputCursor";

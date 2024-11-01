@@ -1,15 +1,15 @@
-import { ref, h,  } from "vue";
+import { ref, h } from "vue";
 
-import {CSSProperties, VNode} from "vue";
+import { CSSProperties, VNode } from "vue";
 
-export  interface UseFakeInputCursor {
+export interface UseFakeInputCursor {
   el: () => VNode;
   showInputCursor: () => void;
   hideInputCursor: () => void;
-  updateInputCursor: (element: HTMLElement, text: string) => void;
+  updateInputCursor: (text: string) => void;
 }
 
-export  interface UseFakeInputCursorParams {
+export interface UseFakeInputCursorParams {
   cursorStyle?: Partial<CSSStyleDeclaration>;
   cursorAnimation?: {
     name?: CSSProperties["animation-name"];
@@ -20,16 +20,14 @@ export  interface UseFakeInputCursorParams {
   };
 }
 
-
-
 const DEFAULT_CURSOR_STYLE = {
     position: "absolute",
-    top: "50%",
+    bottom: "0",
     width: "2px",
     backgroundColor: "black",
     opacity: "0",
-    transform: "translateY(-50%)",
-    height: "10px",
+    transform: "translateY(50%)",
+    height: "1.5em",
   },
   DEFAULT_CURSOR_ANIMATION = {
     name: "blink",
@@ -52,24 +50,41 @@ export function useFakeInputCursor({
   };
 
   const cursorVisible = ref(false);
-  const cursorPosition = ref(0);
+  const textContent = ref("");
 
   const el = () =>
     h(
       "div",
       {
         style: {
-          visibility: cursorVisible.value ? "visible" : "hidden",
-          left: `${cursorPosition.value}px`,
-          animationName: cursorAnimation.name,
-          animationDuration: cursorAnimation.duration,
-          animationTimingFunction: cursorAnimation.timingFunction,
-          animationIterationCount: cursorAnimation.iterationCount,
-          ...cursorStyle,
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100%",
         },
       },
 
       [
+        h(
+          "span",
+          {
+            style: {
+              opacity: 0,
+            },
+          },
+          textContent.value,
+        ),
+        h("span", {
+          style: {
+            visibility: cursorVisible.value ? "visible" : "hidden",
+            animationName: cursorAnimation.name,
+            animationDuration: cursorAnimation.duration,
+            animationTimingFunction: cursorAnimation.timingFunction,
+            animationIterationCount: cursorAnimation.iterationCount,
+            ...cursorStyle,
+          },
+        }),
+
         h(
           "style",
           null,
@@ -92,24 +107,8 @@ export function useFakeInputCursor({
     cursorVisible.value = false;
   };
 
-  const updateInputCursor = (element: HTMLElement, text: string) => {
-    if (element) {
-      const index = text.length;
-
-      if (index === 0) {
-        cursorPosition.value = 0;
-        return;
-      }
-
-      const tempSpan = document.createElement("span");
-      tempSpan.style.font = getComputedStyle(element).font;
-      tempSpan.innerText = text;
-      document.body.appendChild(tempSpan);
-
-      cursorPosition.value = tempSpan.offsetWidth;
-
-      document.body.removeChild(tempSpan);
-    }
+  const updateInputCursor = (text: string) => {
+    textContent.value = text;
   };
 
   return {
